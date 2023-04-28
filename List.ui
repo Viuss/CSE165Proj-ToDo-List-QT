@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
+    <width>451</width>
     <height>326</height>
    </rect>
   </property>
@@ -32,6 +32,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="addItemButton">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -44,20 +51,13 @@
        </property>
       </spacer>
      </item>
-     <item>
-      <widget class="QPushButton" name="addItemButton">
-       <property name="text">
-        <string>Add task</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
+      <y>90</y>
       <width>411</width>
       <height>171</height>
      </rect>
@@ -84,7 +84,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>466</width>
+     <width>451</width>
      <height>17</height>
     </rect>
    </property>
@@ -95,6 +95,8 @@
     <addaction name="actionClear_all"/>
     <addaction name="actionExit"/>
     <addaction name="actionSort"/>
+    <addaction name="actionRemind_me"/>
+    <addaction name="actionExport"/>
    </widget>
    <addaction name="menuHelp_lmao"/>
   </widget>
@@ -112,6 +114,16 @@
   <action name="actionSort">
    <property name="text">
     <string>Sort</string>
+   </property>
+  </action>
+  <action name="actionRemind_me">
+   <property name="text">
+    <string>Remind me</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
    </property>
   </action>
  </widget>

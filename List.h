@@ -24,6 +24,17 @@ public slots:
     void itemStatusChanged(Item* item);
     void updateStatus();
 
+private slots:
+    void on_actionClear_all_triggered();
+
+    void on_actionExit_triggered();
+
+    void on_actionSort_triggered();
+
+    void on_actionExport_triggered();
+
+    //void on_actionRemind_me_triggered();
+
 private:
     Ui::List* ui;
     QVector<Item*> items;
