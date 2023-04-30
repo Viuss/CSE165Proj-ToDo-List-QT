@@ -62,3 +62,20 @@ void Item::checked(bool checked)
 }
 
 
+//void Item::on_Importance_toggled(bool checked)
+//{
+//   connect(ui->Importance, &QCheckBox::toggled, this, &Item::checked);
+//}
+
+
+//void Item::on_checkbox_toggled(bool checked)
+//{
+//   connect(ui->checkbox, &QCheckBox::toggled, this, &Item::checked);
+//}
+
+
+//void Item::on_removeButton_clicked()
+//{
+//    emit removed(this);
+//}
+

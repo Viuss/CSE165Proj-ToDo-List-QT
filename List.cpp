@@ -64,9 +64,9 @@ void List::removeItem(Item* Item)
 {
     items.removeOne(Item);
     ui->itemsLayout->removeWidget(Item);
-    //Item->setParent(nullptr); // Set the item's parent to nullptr to prevent memory leak
     delete Item;
     removeItemName(Item->getName()); // Remove the name of the deleted item from the vector
+    Item->setParent(nullptr); // Set the item's parent to nullptr to prevent memory leak
     updateStatus();
 }
 

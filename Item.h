@@ -55,6 +55,12 @@ private slots:
 
     //void on_checkbox_stateChanged(int arg1);
 
+    //void on_Importance_clicked();
+
+    //void on_Importance_toggled(bool checked);
+
+    //void on_checkbox_toggled(bool checked);
+
 private:
     Ui::Item* ui; // Pointer to the Item's UI elements
 };
