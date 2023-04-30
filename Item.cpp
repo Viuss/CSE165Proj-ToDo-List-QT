@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "subitem.h"
 #include "ui_Item.h"
 
 #include <QWidget>
@@ -13,6 +14,7 @@ Item::Item(const QString& name, QWidget* parent) :
     ui->setupUi(this);
     setName(name);
 
+
     // Connect the remove button to the removed signal.
     connect(ui->removeButton, &QPushButton::clicked, this, [this] {
         emit removed(this);
@@ -24,10 +26,10 @@ Item::Item(const QString& name, QWidget* parent) :
     connect(ui->checkbox, &QCheckBox::toggled, this, &Item::checked);
 }
 
+
 // Destructor: print a message to the console and delete the user interface.
 Item::~Item()
 {
-    qDebug() << "~Item() called";
     delete ui;
 }
 
@@ -52,30 +54,25 @@ bool Item::isCompleted() const
 // Slot that is called when the checkbox is checked or unchecked.
 void Item::checked(bool checked)
 {
-    // Set the font to strike out if the checkbox is checked.
-    QFont font(ui->checkbox->font());
-    font.setStrikeOut(checked);
-    ui->checkbox->setFont(font);
-
     // Emit the statusChanged signal.
     emit statusChanged(this);
 }
 
 
-//void Item::on_Importance_toggled(bool checked)
-//{
-//   connect(ui->Importance, &QCheckBox::toggled, this, &Item::checked);
-//}
+void Item::on_subButton_clicked()
+{
+    bool ok;
+    QString name = QInputDialog::getText(this, "Add Item", "Item name", QLineEdit::Normal,
+                                         "Untitled Item", &ok); // Prompt the user to enter the name of the new item
+    if (ok && !name.isEmpty()) {
+        qDebug() << "Adding new Item";
+
+        subItem* subItem = new class subItem(name); // Create a new item with the given name
+        //connect(subItem, &subItem::removed, this, &Item::removeItem); // Connect the item's "removed" signal to the removeItem slot
+        //subItems.append(subItem);
+        ui->subLayout->addWidget(subItem);
+    }
+}
 
 
-//void Item::on_checkbox_toggled(bool checked)
-//{
-//   connect(ui->checkbox, &QCheckBox::toggled, this, &Item::checked);
-//}
-
-
-//void Item::on_removeButton_clicked()
-//{
-//    emit removed(this);
-//}
 

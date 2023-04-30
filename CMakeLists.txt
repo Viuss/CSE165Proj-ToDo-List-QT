@@ -20,6 +20,9 @@ set(PROJECT_SOURCES
         Item.h
         Item.cpp
         Item.ui
+        subitem.h
+        subitem.cpp
+        subitem.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

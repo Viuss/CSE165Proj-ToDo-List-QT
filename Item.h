@@ -23,6 +23,7 @@ public:
 
     // Destructor to clean up memory
     ~Item();// Function to set the name of the Item
+
     void setName(const QString& name);
 
     // Function to retrieve the name of the Item
@@ -49,6 +50,9 @@ signals:
     // Signal emitted when the status of an Item is changed
     void statusChanged(Item* item);
 
+//public slots:
+//    void subStatusChanged(Item* item);
+
 private slots:
     // Slot to handle when the checkbox for an Item is toggled
     void checked(bool checked);
@@ -60,6 +64,8 @@ private slots:
     //void on_Importance_toggled(bool checked);
 
     //void on_checkbox_toggled(bool checked);
+
+    void on_subButton_clicked();
 
 private:
     Ui::Item* ui; // Pointer to the Item's UI elements

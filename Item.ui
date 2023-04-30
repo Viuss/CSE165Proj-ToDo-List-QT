@@ -37,7 +37,17 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="subButton">
+       <property name="text">
+        <string>Add Sub-Item</string>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="subLayout"/>
    </item>
   </layout>
  </widget>
