@@ -8,15 +8,17 @@
 // Constructor: initialize the user interface, set the name, and connect the signals and slots.
 Item::Item(const QString& name, QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::item)
+    ui(new Ui::Item)
 {
     ui->setupUi(this);
     setName(name);
 
     // Connect the remove button to the removed signal.
-    connect(ui->removeButton, &QPushButton::clicked, [this] {
+    connect(ui->removeButton, &QPushButton::clicked, this, [this] {
         emit removed(this);
     });
+
+    connect(ui->Importance, &QCheckBox::toggled, this, &Item::checked);
 
     // Connect the checkbox to the checked slot.
     connect(ui->checkbox, &QCheckBox::toggled, this, &Item::checked);
@@ -58,3 +60,5 @@ void Item::checked(bool checked)
     // Emit the statusChanged signal.
     emit statusChanged(this);
 }
+
+

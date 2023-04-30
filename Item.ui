@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>item</class>
- <widget class="QWidget" name="item">
+ <class>Item</class>
+ <widget class="QWidget" name="Item">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>368</width>
-    <height>269</height>
+    <width>602</width>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,22 +17,16 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QCheckBox" name="checkbox">
        <property name="text">
         <string>Do Things</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="Importance">
+       <property name="text">
+        <string>Important!</string>
        </property>
       </widget>
      </item>

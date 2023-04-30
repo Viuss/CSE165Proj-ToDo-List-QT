@@ -8,6 +8,24 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QTimer>
+#include <iostream>
+#include <vector>
+
+QLayoutItem* itemsLayout;
+std::vector<std::string> todoManual; // vector to store the names of the items
+
+void insertionSort(QVector<QString> &vec) {
+    int n = vec.size();
+    for (int i = 1; i < n; i++) {
+        QString key = vec[i];
+        int j = i - 1;
+        while (j >= 0 && vec[j] > key) {
+            vec[j + 1] = vec[j];
+            j = j - 1;
+        }
+        vec[j + 1] = key;
+    }
+}
 
 List::List(QMainWindow *parent):
     QMainWindow(parent),
@@ -15,7 +33,7 @@ List::List(QMainWindow *parent):
     items() // Initialize the vector of Items
 {
     ui->setupUi(this); // Set up the UI for this window
-    connect(ui->addItemButton, &QPushButton::clicked, this, &List::addItem); // Connect the addItemButton to the addItem slot
+    itemsLayout = ui->itemsLayout;
     updateStatus(); // Update the status label
 }
 
@@ -24,21 +42,21 @@ List::~List()
     delete ui; // Deallocate the UI
 }
 
-void List::addItem()
+void List::on_addItem_clicked()
 {
     bool ok;
-    QString name = QInputDialog::getText(this, tr("Add Item"),
-         tr("Item name"), QLineEdit::Normal,
-         tr("Untitled Item"), &ok); // Prompt the user to enter the name of the new item
+    QString name = QInputDialog::getText(this, "Add Item", "Item name", QLineEdit::Normal,
+                                         "Untitled Item", &ok); // Prompt the user to enter the name of the new item
     if (ok && !name.isEmpty()) {
         qDebug() << "Adding new Item";
+
         Item* Item = new class Item(name); // Create a new item with the given name
         connect(Item, &Item::removed, this, &List::removeItem); // Connect the item's "removed" signal to the removeItem slot
         connect(Item, &Item::statusChanged, this, &::List::itemStatusChanged); // Connect the item's "statusChanged" signal to the ItemStatusChanged slot
         items.append(Item); // Add the item to the list of items
-        QLayoutItem* itemsLayout = new QWidgetItem(Item);
-        ui->itemsLayout->addItem(itemsLayout);
-        updateStatus(); // Update the status label
+        ui->itemsLayout->addWidget(Item);
+        itemNames.push_back(name); // Add the name of the item to the vector
+        updateStatus();
     }
 }
 
@@ -46,11 +64,13 @@ void List::removeItem(Item* Item)
 {
     items.removeOne(Item);
     ui->itemsLayout->removeWidget(Item);
+    //Item->setParent(nullptr); // Set the item's parent to nullptr to prevent memory leak
     delete Item;
+    removeItemName(Item->getName()); // Remove the name of the deleted item from the vector
     updateStatus();
 }
 
-void List::itemStatusChanged(Item* /*Item*/)
+void List::itemStatusChanged(Item*)
 {
     updateStatus(); // Update the status label
 }
@@ -79,6 +99,10 @@ void List::on_actionClear_all_triggered()
     }
 }
 
+void List::setImportance(Item* item, const QString& importance)
+{
+    //item->importanceLabel(importance);
+}
 
 void List::on_actionExit_triggered()
 {
@@ -88,21 +112,24 @@ void List::on_actionExit_triggered()
 
 void List::on_actionSort_triggered()
 {
-    std::sort(items.begin(), items.end(), [](Item* a, Item* b) {
-        return a->name() < b->name();
-    });
-
-    // Clear the current layout
-    QLayoutItem *child;
-    while ((child = ui->itemsLayout->takeAt(0)) != nullptr) {
-        delete child->widget();
-        delete child;
-    }
-
-    // Add the sorted items to the layout
+    QVector<QString> names;
     for (auto item : items) {
-        ui->itemsLayout->addWidget(item);
+        names.append(item->getName());
     }
+
+    // Sort the vector
+    insertionSort(names);
+
+    // Create a QString to hold the sorted names
+    QString sortedNames;
+
+    // Combine the sorted names into a QString
+    for (const QString& name : names) {
+        sortedNames += name + "\n";
+    }
+
+    // Display the sorted names in a popup box
+    QMessageBox::information(this, "Sorted Names", sortedNames);
 }
 
 
@@ -136,28 +163,40 @@ void List::on_actionExport_triggered()
     file.close();
 }
 
+void List::on_actionRemind_me_triggered()
+    {
+        // Create a message box
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("This is your reminder");
+        msgBox.setText("Do your tasks!");
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+
+        msgBox.setButtonText(QMessageBox::Cancel, "NO");
+        // Show the message box and wait for a response
+        int ret = msgBox.exec();
+
+        if (ret == QMessageBox::Ok) {
+            // User clicked OK
+            // Do something here if needed
+        }
+        else if (ret == QMessageBox::Cancel) {
+            // User clicked cancel
+            QApplication::quit(); //quit program
+            return;
+        }
+}
 
 
-//void List::on_actionRemind_me_triggered()
-//{
-//    // Get the currently selected item
-//    QListWidgetItem *currentItem = ui->listWidget->currentItem();
-//    if (currentItem == nullptr) {
-//        QMessageBox::warning(this, "No Item Selected", "Please select an item to set a reminder for.");
-//        return;
-//    }
+void List::on_tableView_windowIconTextChanged(const QString &iconText)
+{
 
-//    // Get the due date for the selected item
-//    QDate dueDate = currentItem->data(Qt::UserRole).toDate();
+}
 
-//    // Get the current time
-//    QTime currentTime = QTime::currentTime();
+void List::removeItemName(QString name)
+{
+        itemNames.removeAll(name); // Remove the name of the deleted item from the vector
+}
 
-//    int msecRemaining = 10;
 
-//    // Schedule a timer to display a reminder
-//    QTimer::singleShot(msecRemaining, this, [=]() {
-//        QString message = QString("Reminder: %1").arg(currentItem->text());
-//        QMessageBox::information(this, "Reminder", message);
-//    });
-//}
+
