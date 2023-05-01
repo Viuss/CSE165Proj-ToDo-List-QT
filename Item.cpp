@@ -59,6 +59,7 @@ void Item::checked(bool checked)
 }
 
 
+//Function adding the sub item
 void Item::on_subButton_clicked()
 {
     bool ok;
@@ -66,10 +67,7 @@ void Item::on_subButton_clicked()
                                          "Untitled Item", &ok); // Prompt the user to enter the name of the new item
     if (ok && !name.isEmpty()) {
         qDebug() << "Adding new Item";
-
         subItem* subItem = new class subItem(name); // Create a new item with the given name
-        //connect(subItem, &subItem::removed, this, &Item::removeItem); // Connect the item's "removed" signal to the removeItem slot
-        //subItems.append(subItem);
         ui->subLayout->addWidget(subItem);
     }
 }

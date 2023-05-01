@@ -24,6 +24,7 @@ public:
     // Destructor to clean up memory
     ~Item();// Function to set the name of the Item
 
+    // Function to set the name of the Item
     void setName(const QString& name);
 
     // Function to retrieve the name of the Item
@@ -57,14 +58,7 @@ private slots:
     // Slot to handle when the checkbox for an Item is toggled
     void checked(bool checked);
 
-    //void on_checkbox_stateChanged(int arg1);
-
-    //void on_Importance_clicked();
-
-    //void on_Importance_toggled(bool checked);
-
-    //void on_checkbox_toggled(bool checked);
-
+    // Slot to handle adding a new sub-item
     void on_subButton_clicked();
 
 private:

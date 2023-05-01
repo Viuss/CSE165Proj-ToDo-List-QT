@@ -20,38 +20,30 @@ subItem::subItem(const QString& name, QWidget* parent) :
     connect(ui->checkSub, &QCheckBox::toggled, this, &subItem::checkSub);
 }
 
+//Destructor
 subItem::~subItem()
 {
     qDebug() << "~subItem() called";
     delete ui;
 }
 
+//Name setter on the checkbox
 void subItem::setName(const QString& name)
 {
     ui->checkSub->setText(name);
 }
 
+//Return name of sub item
 QString subItem::name() const
 {
     return ui->checkSub->text();
 }
 
+//Check box marked or not
 bool subItem::isCompleted() const
 {
     return ui->checkSub->isChecked();
 }
-
-//void subItem::removeSub()
-//{
-//    // Remove the subItem from its parent widget.
-//    if (parentWidget()) {
-//        parentWidget()->layout()->removeWidget(this);
-//        parentWidget()->adjustSize();
-//    }
-
-//    // Emit the removed signal.
-//    emit removed(this);
-//}
 
 QString subItem::Importance() const
 {

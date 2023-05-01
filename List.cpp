@@ -14,6 +14,7 @@
 QLayoutItem* itemsLayout;
 std::vector<std::string> todoManual; // vector to store the names of the items
 
+//Insertion sort for later reference
 void insertionSort(QVector<QString> &vec) {
     int n = vec.size();
     for (int i = 1; i < n; i++) {
@@ -64,9 +65,9 @@ void List::removeItem(Item* Item)
 {
     items.removeOne(Item);
     ui->itemsLayout->removeWidget(Item);
+    Item->setParent(nullptr); // Set the item's parent to nullptr to prevent memory leak
     delete Item;
     removeItemName(Item->getName()); // Remove the name of the deleted item from the vector
-    Item->setParent(nullptr); // Set the item's parent to nullptr to prevent memory leak
     updateStatus();
 }
 
@@ -85,7 +86,7 @@ void List::updateStatus()
     }
     int todoCount = items.size() - completedCount; // Calculate the count of uncompleted items
 
-    ui->statusLabel->setText(QString("Status: %1 incomplete / %2 complete")
+    ui->statusLabel->setText(QString("Major Items: %1 incomplete / %2 complete")
          .arg(todoCount)
          .arg(completedCount)); // Update the status label with the counts of completed and uncompleted items
 }
@@ -195,7 +196,7 @@ void List::on_tableView_windowIconTextChanged(const QString &iconText)
 
 void List::removeItemName(QString name)
 {
-        itemNames.removeAll(name); // Remove the name of the deleted item from the vector
+    itemNames.removeAll(name); // Remove the name of the deleted item from the vector
 }
 
 
