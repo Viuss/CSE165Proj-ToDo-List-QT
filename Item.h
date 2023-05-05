@@ -19,10 +19,15 @@ class Item : public QWidget {
 
 public:
     // Constructor to create an instance of an Item widget with a given name and parent
+    // explicit in order to prevent implicit conversions and make sure QString and QWidget are specifically being used
+    // const to indicate a constant reference (will not modify name)
+    // dereference & in order to increase performance when passing large objects
+    //parent widget is responsible for memory management of children in QT, using a pointer to set the parent to null and indicate item object as a top-level widget
+    //this is necessary to have item exist as a standalone widget that can be dropped onto the user interface, and allows it to be used in other parts of the app like the list or another layout
     explicit Item(const QString& name, QWidget* parent = nullptr);
 
     // Destructor to clean up memory
-    ~Item();// Function to set the name of the Item
+    ~Item();
 
     // Function to set the name of the Item
     void setName(const QString& name);

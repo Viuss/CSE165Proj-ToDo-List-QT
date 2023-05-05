@@ -19,6 +19,7 @@ class List : public QMainWindow {
     Q_OBJECT
 
     //Declare constructor and destructor
+    //setting the parent to nullptr marks it as top level widget making it responsible for deleting its own children (such as the item object)
 public:
     explicit List(QMainWindow *parent = nullptr);
     ~List();

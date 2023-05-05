@@ -11,8 +11,8 @@
 #include <iostream>
 #include <vector>
 
-QLayoutItem* itemsLayout;
-std::vector<std::string> todoManual; // vector to store the names of the items
+QLayoutItem* itemsLayout; // pointer to where the items are laid out and managed
+std::vector<std::string> todoManual; // vector to store the names of the items manually just in case
 
 //Insertion sort for later reference
 void insertionSort(QVector<QString> &vec) {
@@ -66,8 +66,8 @@ void List::removeItem(Item* Item)
     items.removeOne(Item);
     ui->itemsLayout->removeWidget(Item);
     Item->setParent(nullptr); // Set the item's parent to nullptr to prevent memory leak
-    delete Item;
     removeItemName(Item->getName()); // Remove the name of the deleted item from the vector
+    delete Item;//THIS WAS ORIGINALLY A MEMORY ISSUE IN THE SUBMISSION BUT I FIGURED OUT THE FIX AFTERWARDS
     updateStatus();
 }
 

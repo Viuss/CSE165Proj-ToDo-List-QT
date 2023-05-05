@@ -27,7 +27,7 @@ Item::Item(const QString& name, QWidget* parent) :
 }
 
 
-// Destructor: print a message to the console and delete the user interface.
+// Destructor: delete the user interface.
 Item::~Item()
 {
     delete ui;
